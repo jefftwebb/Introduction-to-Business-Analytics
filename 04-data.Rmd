@@ -893,26 +893,26 @@ Map to the ex and Y axis, and which is associated with an additional plot dimens
 
 **Glossary**
 
-- `Working Directory`.
-- `Data dictionary.`
-- `Exploratory data analysis or EDA`.
-- `Workflow`
-- `Target variable`. 
-- `Predictor`. 
-- `Mean`. 
-- `Median`. 
-- `Mode`.
-- `Standard deviation`. 
-- `Distribution`. 
-- `Central tendency`.
-- `Percentile`.
-- `Spread`.
-- `Categorical variable`. 
-- `Numeric (or continuous) variable`.
-- `Factor`.
-- `Ordinal factor`.
-- `Histogram`.
-- `Bin`.
-- `Barplot`.
-- `Boxplot`
+- `Working Directory`. The file directory in which you are currently working.  If data is referenced, R will look for it in the working directory. For example, if the path for a file is something like `Home/stats/IS-6487`, then `IS-6487` is the working directory.  Note that data not in your working directory can always be accessed by supplying the file path explicitly.
+- `Data dictionary.` From Wikipedia: "A data dictionary, or metadata repository, as defined in the IBM Dictionary of Computing, is a centralized repository of information about data such as meaning, relationships to other data, origin, usage, and format."
+- `Exploratory data analysis or EDA`. An approach to analyzing a dataset, often preparatory to modeling, that involves discovering patterns and summarizing its main characteristics, often using visualization.  
+- `Workflow`.  The order for undertaking tasks to accomplish a goal. It goes without saying that an efficient workflow is ideal.
+- `Target variable`. The data representation of the phenomenon or event to be modeled or explained. The target variable consists in historical observations usually stored as a column in a table. In statistics the target variable is often referred to as the dependent variable. 
+- `Predictor`.  The data representation of information that can be used to model or predict the target variable. Predictors consist in historical observations usually stored as columns in a table. In statistics predictors are often referred to as independent variables.
+- `Mean`. The average.
+- `Median`. The 50th percentile, or middle, observation in the data.
+- `Mode`. The most common value in a categorical variable.
+- `Standard deviation`. The average deviation of an observation from the mean of a variable.
+- `Central tendency`. A variable's central or typical value. Often the mean is used to summarize central tendency, but if there are outliers the median is a better measure.
+- `Outliers`.  Observations that fall far outside the range of typical values for a variable. Outliers can be defined in different ways.
+- `Percentile`. From Wikipedia:  "a value below which a given percentage of values in a variable's frequency distribution fall.  For example, the 50th percentile (the median) is the score below which 50% of the values in the distribution may be found."
+- `Spread`. The variability of values in a variable.
+- `Categorical variable`. Variable consisting exclusively of categories or class labels.
+- `Numeric (or continuous) variable`. A variable representing measurements such as height or weight or price.
+- `Factor`. A categorical variable that, in R, is stored as a number, for memory efficiency.
+- `Ordinal factor`. A factor that has an explicit order such as: small, medium, large.
+- `Histogram`. A plot type showing the frequency distribution of a single variable.
+- `Bin`. The collection of numeric values into categories representing intervals of the variable's numeric range.
+- `Barplot`. A plot type in which the bars represent on the y-axis a summary statistic, such as an average or a count, for variable categories on the x-axis.
+- `Boxplot`.  A plot type showing the frequency distribution, summarized as a box with "whiskers," for variable categories.
 
