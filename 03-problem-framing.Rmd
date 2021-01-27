@@ -152,11 +152,8 @@ Here are some of the questions you have come up with (not all of them, of course
 
 In some cases your interviews were lengthy and thorough; in others they were short  and provided little usable information. for example, Mr. Harding was called away after 10 minutes to deal with some crisis in the call center.
 
-Your goal in the next several days is to read through the notes that your colleague made and begin to assemble a 360 degree view of the problem into an map.  Here is a map from a different project to give you a sense of what yours might look like:
+Your goal in the next several days is to read through the notes that your colleague made and begin to assemble a 360 degree view of the problem into a map.  
 
-![](images/360_view.png)
-
- 
 Here is a brief snapshot of the information you got.
 
 - You shared your refined business problem statement with your boss, Dr. Wright, and  she applauded your work, agreeing that it would be essential to accurately segment the customer population and to take into consideration the cost of the campaign, compared to acquiring a new customer. She like your idea about factoring in the estimated future revenue for a customer, but recommended  keeping the initial analysis fairly simple, and restricting your efforts  to predicting churn for the next subscription period, and taking a stab at segmentation. You suggested using a decision tree to do the classification, and she agreed that would be a good place to start.   She emphasized that it would be crucial to evaluate the accuracy of your estimates of customer churn, as low accuracy could  definitely imperil the success of the campaign.
@@ -166,6 +163,10 @@ Here is a brief snapshot of the information you got.
 - You were pleasantly surprised in your meeting with Ms. Baker, the Director of Marketing.  She appreciated your point about customer segmentation, and wondered aloud if  previous campaigns had not done enough to  segment customers based on their likelihood of churning; she thought it possible that resources had been wasted in the past on customers who were either very likely to churn or not at all likely to churn. She liked your idea of focusing on the group that might be persuaded to stay with the appropriate incentive. However, she was also adamant that the data science group  should pay attention to the long experience of analysts in the Marketing Department in running these campaigns,  and insisted that  you   get one of the Marketing Analysts  to sign off on your plans. You mentioned that you were scheduled to meet with Ms. Lepore, and that you would ask your boss to give Ms. Baker a call about  formal collaboration and permission.  (Your boss's comment: "Permission comes from me, not Marketing.")
 
 - You next met with Ms. Lepore, the marketing analyst. She gave you great advice on which data engineer to work with, idiosyncrasies about the data, the meaning of some of the fields with missing  observations, and warned you that Ms. Baker and Dr. Wright do not get along well.  You also learned that, in fact, no customer segmentation had been done for previous campaigns, indicating that the bar would be pretty low for your project to be judged a success. Indeed, it turns out that the last campaign was estimated to have improved retention by just 2%, which seems like an easy performance benchmark to beat. She noted that the company's available data definitely supports a churn analysis: there are abundant historical examples of customers who have not renewed their contracts, along with plenty of demographic, financial and behavioral information.
+
+The map can be rough. It simply helps you organize your thinking and identify all of the dimensions of the project. Here is what your map might look like:
+
+![](images/360_view.jpg)
 
 ## Analytic Problem Framing
 
