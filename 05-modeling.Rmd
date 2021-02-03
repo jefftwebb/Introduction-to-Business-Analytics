@@ -7,6 +7,12 @@ knitr::opts_chunk$set(echo = T, message = F, warnings = F)
 
 ```
 
+
+## tl;dr
+
+This chapter introduces the classification tree algorithm, focusing on key concepts like entropy and information gain, along with the R code for fitting a tree using the `rpart` package and its eponymous `rpart()` function. While classification tree models typically don't perform as well as some other machine learning algorithms, they nevertheless produce a clear set of decision rules which can be very useful for segmenting a customer population. The `rpart` package is an open-source implementation of the CART algorithm (Classification and Regression Trees), developed by Leo Breiman and others in the 1980s.  ("rpart" stands for "recursive partitioning.")
+
+## Introduction
 In the last chapter  we cleaned the MegaTelCo data, removing rows with impossible or improbable values, as well as those with missing values.  We then explored the data looking for notable relationships between the target variable and various predictors.  We are now ready to model churn more formally.  The method we will use, as an illustration of modeling generally in the analytics lifecycle, is decision or classification trees, as implemented in the R package, `rpart`. (This is just one of many packages implementing decision trees in R.)  Before we get started, let's remind ourselves of the broader context of what we are doing.
 
 This is a binary **classification problem** because churn has two possible outcomes---represented  in the target factor variable with the class labels, `LEAVE` and `STAY`.    And it is a **supervised problem** because we have historical observations of both leaving and staying, which can be used to  create a model of the relationship between various predictor variables--- demographic, behavioral, and what we have called attitudinal---and the target variable.  The problem can also be described as **supervised segmentation** because we are using that historical data to  create a model that will segment future customers into one of two groups: leave or stay.   (Remember:   if the outcome is continuous  then the problem is a regression problem, not a classification problem.) 
@@ -50,7 +56,7 @@ glimpse(m_clean)
 
 As a reference, here is the data dictionary:
 
-```{r}
+```{r echo = F}
 data.frame(Variable = c("College", "Income",  "Overage", "Leftover", "House", "Handset_price", "Over_15mins_calls_per_month", "Average_call_duration", "Reported_satisfaction", "Reported_usage_level", "Considering_change_of_plan", "Leave","ID"),
             Explanation = c("Is the customer college educated?"," Annual income","Average overcharges per month","Average % leftover minutes per month","Estimated value of dwelling (from the census tract)", "Cost of phone", "Average number of long calls (15 mins or over) per month", "Average duration of a call", "Reported level of satisfaction", "Self-reported usage level", "Was customer considering changing his/her plan?","Class variable: whether customer left or stayed", "Numeric customer ID")) %>%
   kable
@@ -302,4 +308,44 @@ What does this mean?  Well, in terms of a marketing campaign, we should be reali
 ## Variable Importance
 
 We can get a sense of which variables are most important in predicting churn by looking at the tree plot:  the splitting variables closer to the root node are more important. Clearly `house` is the strongest predictor, followed by `overage` and `income`.  This can be useful when doing explanatory or descriptive modeling in order to understand which factors contribute to churn.  However, it is important to understand that variable importance does not imply causation.  For example, we would not want to say that certain housing values cause churn!  Notice that the surprising finding from EDA was confirmed by the tree model:  customer satisfaction is not a predictor of churn.
+
+## Summary
+
+**Packages**
+
+- `dplyr`
+- `ggplot2`
+- `rpart`
+- `rpart.plot`
+
+**Functions**
+
+- `read.csv()`. Reads a .csv file into R's working memory for analysis. The equivalent function in the tidyverse is `read_csv()`, which will do pretty much the same thing.
+- `%>%`. A pipe. Shortcut is shift-command-m. Used for separating data operations into discrete steps, for readability.
+- `ggplot()`.  Created a blank plot canvas.  Must be used in conjunction with a `geom` function specifying the plot type and the aesthetic mapping. 
+- `aes()`.  The aesthetic argument to the `ggplot` function. Specifies which variables 
+Map to the ex and Y axis, and which is associated with an additional plot dimension such as color.
+- `geom_boxplot()`. Creates a boxplot.
+- `rpart()`.  The workhorse function for fitting a classification or a regression tree using the `rpart` package. Note that if the target variable is coded numerically the function will automatically create a regression tree.
+- `rpart.plot()`.  Visualizes a classification or regression tree object created by `rpart()`. This function is included in the `rpart.plot` package. Tree visualizations can be quite busy, making them hard to read.  Two arguments to `rpart.plot()`, `tweak` and `roundint`, are useful for adjusting the size of the text and the nodes.
+
+**Glossary**
+
+- `Predictive model`. A formula for estimating the unknown value of interest: the target. The formula could be mathematical, or it could be a logical statement, such as a rule. Often it is a hybrid of the two. A predictive model of churn would tell us which customers are likely to churn.
+- `Predict`. Estimate an unknown value.
+- `Descriptive model`. A model that provides insight into the underlying phenomenon or process. A descriptive model of churn behavior would tell us what customers who churn typically look like.
+- `Supervised learning`. A model that describes a relationship between a set of selected variables (attributes or features) and a predefined variable called the target variable. The model estimates the value of the target variable as a function (possibly a probabilistic function) of the features.
+- `Attributes`. Fields, columns, variables, features, explanatory variables, predictors.
+- `Instance or example`. Represents a fact or a data point, Also known as a row in a database or spreadsheet.
+- `Feature vector`. An instance, represented as a fixed-length, ordered collection (vector) of feature values.
+- `Modeling`. The creation of a model from data, sometimes called model induction. Induction is a term from philosophy that refers to generalizing from specific cases to general rules (in contrast to deduction, which starts with general rules and specific facts, and creates other specific facts from them).
+- `Training data`. The input data used for creating the model.
+- `Supervised segmentation`. Using historical data to divide customers into segments. In the case of the churn problem, supervised segmentation involves dividing customers into segments having (on average) a higher or lower tendency to leave the company after contract expiration.
+- `Informative attributes`. Variables that reduce our uncertainty about the target variable. These are the variables that are closer to the root in visualization of the tree, and that are most strongly correlated with the target variable. 
+- `Purity`. A "pure" group or class is homogeneous with respect to the target variable. That is, if every member of the group has the same target label, then the group is pure. If there is at least one member of the group that has a different target label, then the group is impure.
+- `Entropy`. A measure of disorder that can be applied to a set to indicate how mixed or impure it is with respect to a property of interest.
+- `Information gain`. A measure of how much an attribute improves (decreases) entropy over the whole segmentation creates. It measures the change in entropy due to any amount of new information being added.
+- `Greediness`.The tree algorithm is "greedy" in the sense that it looks for the best split of the data  conditional on all the previous splits. This makes the splits locally optimal, with no guarantee of being globally optimal.
+- `Classification tree`. A segmentation of the data in which every data point corresponds to one and only one path in the tree and thereby to one and only one week. Each leaf corresponds to a segment, and the attributes and values along the path give the characteristics of the segment.
+- `Accuracy`.  A measure of performance specific to classification models. Accuracy is defined as the proportion of correct predictions. 
 
