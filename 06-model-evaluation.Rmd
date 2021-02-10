@@ -1,8 +1,11 @@
 # Model Evaluation and Deployment
 
+## tl:dr
 
+This chapter focuses on model evaluation, and specifically the task
+of translating model results into profit. Profit is usually the key metric for comparing models and evaluating a proposed analytic solution. The chapter introduces the confusion matrix, a handy tool for summarizing model performance, as well as the cost-benefit matrix, which is used for calculating profit. 
 
-
+## Introduction
 
 A key challenge  in an analytics project is to figure out what to do with a model after creating it.  How will we use it to solve the business problem?  What should we recommend the business do?  In asking these questions we have moved from the domain of predictive analytics---the subject of the last module---to the domain of *prescriptive* analytics,  which is focused on making (to quote DSB) "actionable recommendations based on a data analytic model about what the decision-maker should do to achieve a particular objective." This prescriptive aim *roughly* lines up with the final phases of the CRISP-DM analytics process, Model Evaluation and Model Deployment. I say "roughly" because prescriptive analytics could take place during the CRISP-DM Modeling phase and because deployment can mean a variety of things in analytics projects.  A model might be deployed by writing a report explaining a key relationship  in the data and recommending a course of action, which is clearly prescriptive.  Or it might be deployed by being put into production---for example,  implementing a model to automatically forecast a KPI. This is not clearly prescriptive.  Nevertheless, most analytic solutions should include a prescriptive component, a recommendation for how the results should be used---which course of action, out of the many available, should be taken.  
 
@@ -187,7 +190,7 @@ Notice that our profit estimates will change depending on:
 
 Which class decision threshold would be the best? We can answer this question by calculating profit at different possible decision thresholds in order to identify the one that produces maximum profit.  
 
-Here is an example of how we might do this calculation.
+Here is an example of how we might do this calculation. Don't worry if you can't follow the code; it is presented here simply as an illustration of the method.
 
 1. Pick a set of potential class decision thresholds, and store them in a data frame with an empty profit column (to be filled in the next step).
 
@@ -199,7 +202,7 @@ Here is an example of how we might do this calculation.
 
 ```
 
-2. Calculate expected profit at every threshold using a loop. This code is involved but uses the same basic strategies developed above. Don't worry if you can't follow the code perfectly; it is presented here simply as an illustration of the method.
+2. Calculate expected profit at every threshold using a loop. This code is involved but uses the same basic strategies developed above. 
 
 ```{r ev2}
 
@@ -310,3 +313,38 @@ glimpse(contact_list)
 
 Marketing should contact the 1559 existing customers on this list with a retention offer. If the budget is limited, priority should be given to the customers at the top of the list.
 
+## Summary
+
+**Packages**
+
+- `dplyr`
+- `ggplot2`
+- `rpart`
+- `rpart.plot`
+
+**Functions**
+
+- `table()`.  This is a handy R function for creating a summary table of counts.  In this instance we will use it to create a confusion matrix.  
+- `predict()`. When used with the `type = class` argument this function will predict a class label. When used with the `type = prob` argument it will predict a probability. 
+- `ifelse()`. Used for recoding values in a vector.
+-`rpart()`. Fits a classification tree model.  If the target variable is continuous then this function will automatically fit a regression tree. 
+- `glimpse()`. Provides an overview of a dataset.
+- `head()`. Prints the top `n` rows of a dataset.
+- `filter()`. Subsets a dataset by rows.
+- `arrange()`. Sorts a dataset.
+
+**Glossary**
+
+- `Probability`.  A number between zero and one representing the likelihood of an event, with 0  meaning "won't happen "and 1 meaning "will happen."
+- `Predicted probability`.  A model-generated probability for the likelihood of an event for a given example or instance in a dataset.
+- `Scoring`.  Ordering customers by the likelihood (the predicted probability) of, for example, responding to an offer.
+- `Targeted marketing`. The technique of assigning each consumer a class of likely responder versus not likely responder, in order to target the likely responders.
+- `Confusion matrix`.  A 2 x 2 contingency table representing counts of model predictions  versus observed outcomes.
+- `Cost-benefit matrix`. A 2 x 2 contingency table specifying for each predicted – actual pair in the confusion matrix the cost or benefit of making a decision  based on the predicted  outcome.
+- `False positive (FP)`.  Predict the event, but  it does not occur.
+- `False negative (FN)`. Predict the event does not occur, but it does.
+- `True positive (TP)`. Predict the event and it occurs.
+- `True negative (TN)`. Predict the event does not occur and it does not.
+- `Sensitivity (the true negative rate)`. TN / (TN + FP)
+- `Specificity (the true positive rate)`.  TP / (TP + FN)
+- `Accuracy`. (TP + TN ) / (TP + TN + FP + FN)
