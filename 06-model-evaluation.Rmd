@@ -190,7 +190,7 @@ Notice that our profit estimates will change depending on:
 
 Which class decision threshold would be the best? We can answer this question by calculating profit at different possible decision thresholds in order to identify the one that produces maximum profit.  
 
-Here is an example of how we might do this calculation. Don't worry if you can't follow the code; it is presented here simply as an illustration of the method.
+Here is an example of how we might do this calculation. Don't worry if you can't follow the code; it is presented here simply as an illustration of the method. The key takeaway is that the default class decision threshold of .5 will not necessarily be optimal; in actual analytic projects you would need to put some effort into optimizing the decision threshold.
 
 1. Pick a set of potential class decision thresholds, and store them in a data frame with an empty profit column (to be filled in the next step).
 
@@ -250,7 +250,7 @@ Let's work through the details.
 ### Train the model
 
 ```{r model}
-churn_model <- rpart(leave ~ ., data = m_clean)
+(churn_model <- rpart(leave ~ ., data = m_clean))
 ```
 
 Here we must be careful to remove `id` since, as an arbitrary number, it has no predictive power. We will, however, use `id` later to associate a predicted probability with each customer.
@@ -273,7 +273,7 @@ glimpse(current_customers)
 
 ### Use the model to predict probabilities
 
-Predicting probabilities for the new dataset of current customers is straightforward.  Simply use the `newdata` argument in the `predict()` function:
+Predicting probabilities for the new dataset of current customers is straightforward.  Simply use the `newdata` argument in the `predict()` function.  So far, we have used the predict() function to predict  class labels or probabilities for customers for whom churn (`STAY` or `LEAVE`) has already been observed. Here we will predict probabilities for *current* customers. Because they are current customers, this new dataset does not contain the target variable. We are using the model to predict an event that has not yet occurred!
 
 ```{r  predict }
 predict(churn_model, 
@@ -282,13 +282,13 @@ predict(churn_model,
   head
 ```
 
-We'll now set up a new data frame that includes only `id` and the predicted probability of churn.  
+We'll now set up a new data frame that includes only `id` and the first column in the above table representing the predicted probability of churn.  
 
 ```{r  predict2}
 
 predictions <- current_customers %>% 
   select(id) %>% 
-  mutate(churn_prob = predict(tree_model, 
+  mutate(churn_prob = predict(churn_model, 
                               newdata = current_customers, 
                               type = "prob")[,1])
 
@@ -301,7 +301,7 @@ Above we calculated this as .2.
 
 ### Create the contact list
 
-The contact list will consist in the subset of customers with model-estimated probability of .2 or greater.
+The contact list will consist in the subset of customers with model-estimated probability of .2 or greater. We will simply filter the data frame above titled `predictions` for only the customers who have churn probability greater than or equal to .2, our threshold. 
 
 ```{r  contact }
 contact_list <- predictions %>% 
@@ -310,8 +310,7 @@ contact_list <- predictions %>%
 
 glimpse(contact_list)
 ```
-
-Marketing should contact the 1559 existing customers on this list with a retention offer. If the budget is limited, priority should be given to the customers at the top of the list.
+Notice that, after filtering, the number of current customer is 1559 rather than 2000. Marketing should contact the 1559 existing customers on this list with a retention offer. If the budget is limited, priority should be given to the customers at the top of the list.
 
 ## Summary
 

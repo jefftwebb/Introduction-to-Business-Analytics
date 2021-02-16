@@ -113,9 +113,9 @@ rpart.plot(tree_model)
 
 
 
-How to read this?  66% of the data (3306) is in the left branch and 34% (1688) in the right. The majority class in the left leaf node is `LEAVE`, with 1 - .41 = .59 or 59% of the observations, which is therefore the prediction for all observations falling in this node.  The reason the tree lists the proportion of `STAY` in the left branch is because, as noted above, that is the category we are explicitly modeling due to the variable's factor structure. The majority class, and hence the predicted class for that group, in the right node is `STAY` with 69% of the observations.
+How to read this?  66% of the data (3306 observations) is in the left branch and 34% (1688 observations) in the right. The majority class in the left leaf node is `LEAVE`, with 1 - .41 = .59 or 59% of the observations, which is therefore the prediction for all observations falling in this node.  The reason the tree lists the proportion of `STAY` in the left branch is because, as noted above, that is the category we are explicitly modeling due to the variable's factor structure. The majority class, and hence the predicted class for that group, in the right node is `STAY` with 69% of the observations.
 
-So, a tree model is super simple to set up in R, though the output can be tricky to interpret.  It helps to have an example handy when interpreting a tree.
+So, a tree model is super simple to set up in R, though the output can be tricky to interpret.  It helps to have an example handy when interpreting a new tree model.
 
 Notice that, while `rpart()` has created a model of `STAY`, the model provides information about both `STAY` and `LEAVE`, telling us when---according to which values of `house`---to predict one and when to predict the other. 
 
@@ -135,14 +135,16 @@ In our our tree model, entropy would be 0 if the leaf nodes were either all `LEA
 
 Entropy is  formally defined as: $-p_1 log(p_1) - p_2 log(p_2) ...$
 
-We will follow DSB in using log base 2 to calculate entropy and information gain.  
+We will follow DSB in using log base 2 to calculate entropy and information gain.  Log base 2 is used, rather than natural log (which is more common in statistics), because it ensures that entropy scales between 0 and 1. (Natural log would work just fine for calculating entropy for comparative use but it would not have this nice property.)
 
-Entropy in the two leaf nodes would be:
+Entropy in the two leaf nodes, using rounded inputs from the plot for illustration, would be:
 
 - Left leaf node:  -.41 x log(.41) - .59 x log(.59) = .98.
 - Right leaf node:  -.69 x log(.69) - .31 x log(.31) = .89.
 
 This result makes intuitive sense since entropy is higher in the more impure left node where the classes are more evenly balanced. 
+
+For future calculations we will not round the inputs since then our final result would be thrown off by rounding error.
 
 ## Information Gain
 
@@ -153,17 +155,20 @@ $$IG(parent, children) = entropy(parent) - [p(c_1) entropy(c_1) + p(c_2) entropy
 
 The formula combines the weighted entropy in the children (weighted by the proportion of the data in each node) and subtracts it from the entropy in the parent.
 
-The $IG$ calculation or the tree model would be:
+The $IG$ calculation for the tree model, using all the decimals we have available from the output, would be:
 
-- $entropy(parent)$ uses the proportion of `LEAVE` and `STAY` in the parent node, which in this case is the entire dataset: -.49 x log(.49) - .51 x log(.51) = .9997.
-- $p(c_1)$  is the proportion of observations  in the left branch node: 3306/4994 = .66
-- $p(c_2)$ is the proportion of observations in the right branch node: 1 - .66 = .34
-- $entropy(c_1)$ from above: -.41 x log(.41) - .59 x log(.59) = .98.
-- $entropy(c_2)$ from above: -.69 x log(.69) - .31 x log(.31) = .89.
+- $entropy(parent)$ uses the proportion of `LEAVE` and `STAY` in the parent node, which in this case is the entire dataset: -.4941930 x log(.4941930) - .5058070 x log(.5058070) = .9999027.
+- $p(c_1)$  is the proportion of observations  in the left branch node: 3306/4994 = .6619944
+- $p(c_2)$ is the proportion of observations in the right branch node: 1 - .66 = .3380056.
+- $entropy(c_1)$ from above: -.4125832 x log(.4125832) - .5874168 x log(.5874168) = .977837.
+- $entropy(c_2)$ from above: -.6883886 x log(.6883886) - .3116114 x log(.3116114) = .8950248.
 
-$IG$ = .997 - (.66 x .98 + .34 x ..89) = .05.
+$IG$ = .9999027 - (.66 x .977837 + .3380056 x .8950248) = .05.
 
-This calculation is a little off due to rounding error.  Below is a plot showing the exact $IG$ associated with each potential split on house. The value of `house` at maximum $IG$ is about 600,000 (black dashed line) as identified by the tree model.
+It is fine to round the final result for reporting purposes.
+
+
+Below is a plot showing the exact $IG$ associated with each potential split on house. The value of `house` at maximum $IG$ is about 600,000 (black dashed line) as identified by the tree model.
 
 ```{r echo = F}
 # Create a data.frame of house prices from min to max by 1000
@@ -279,7 +284,9 @@ Can we improve the model?   Let's fit a tree model with all the  available predi
 rpart.plot(tree_model2)
 ```
 
-Plots with lots of nodes and branches can become too complicated to view. But we can adjust the `tweak` argument and the `roundint` argument to the plotting function to make a more legible plot. Play around with different numbers. `tweak = 1` will produce the same plot as above.
+Let's practice reading this tree. The first split is on house less than \$600k (left branch) or greater than \$600k (right branch). Subsequently, all the splits will have "yes" on the left and "no" on the right, where "yes" and "no" represent answers to the condition stated in the split. Reading the left branch: customers owning homes worth less than \$600k (first split) and with overage greater than 98 (second split) are predicted to leave. Reading the right branch: customers owning homes worth more than \$600k (first split) and with incomes less than \$100k (second split) are predicted to stay.
+
+Plots with lots of nodes and branches can quickly become too complicated to view. But we can adjust the `tweak` argument and the `roundint` argument to the plotting function to make a more legible plot. Play around with different numbers. `tweak = 1` will produce the same plot as above.
 
 ```{r}
 rpart.plot(tree_model2, tweak = 1, roundint=T)
