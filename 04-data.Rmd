@@ -204,7 +204,7 @@ mean(c(10, 12,  3, 4, 500))
 
 **Median**
 
-As noted above, summary statistics like mean and median attempt to capture the central tendency of the data in a single number. Sometimes, however, what should count as the center of the data is not clear. Take the vector of numbers above. The mean is a somewhat unsatisfying summary since it is much, much larger than the majority of the numbers in the data. It does not really reflect the typical observation. In this case the large number, 500, has influenced the mean, pulling it away from the majority of the observations. This is one of the shortcomings of the mean: *it is sensitive to outliers.* 
+As noted above, summary statistics like mean and median attempt to capture the central tendency of the data in a single number. Sometimes, however, what should count as the center of the data is not clear. Take the vector of numbers above. The mean is a somewhat unsatisfying summary since it is much, much larger than the majority of the numbers in the data. It does not really reflect the typical observation. In this case the large number, 500, has influenced the mean, pulling it away from the majority of the observations. This is one of the shortcomings of the mean as a measure of central tendency: *it is sensitive to outliers.* 
 
 The median, by contrast, measures the center of the data in a way that is robust to outliers. The median is, simply, the middle of the data. The procedure for calculating the median is to sort the data from smallest to largest and then find the middle observation. (If there is an even number of observations then the median will be between the two middle observations.)  For an odd number of observations the formula is:
 
@@ -220,11 +220,19 @@ In general, the median is the better measure of central tendency for data with o
 
 **Percentiles**
 
-Once data has been sorted from small to large we can calculate percentiles. The median is the 50th percentile of the data because, being the middle of the data, it is 50% of the way through the sorted data, when starting from the smallest observation. The 25th percentile is 25% of the way through the sorted data (also known as the first quartile), and the 75th percentile is 75% through (the third quartile). The median is also the second quartile. Here is an example.  
+Once data has been sorted from small to large we can calculate percentiles. The median is the 50th percentile of the data because, being the middle of the data, it is 50% of the way through the sorted data, when starting from the smallest observation. The 25th percentile is 25% of the way through the sorted data (also known as the first quartile), and the 75th percentile is 75% through (the third quartile). The median is also the second quartile. Here is an example using the built-in `summary()` function.  
 
 ```{r}
-summary(1:10)
+numbers <- c(1, 2, 4, 6, 8, 10)
+summary(numbers)
 ```
+
+Let's look closer at the calculation.
+
+
+$$\bar{x} = \frac{x_1+x_2+\cdots+x_n}{n} = \frac{1 + 2+4+6+8+10}{6} = \frac{31}{6} = 5.166667$$
+$$\text{median}(x) = x_{(n + 1)/ 2} = x_{(6 + 1)/ 2} = x_{3.5}$$
+$x_{3.5}$ represents the number that is midway between the third and fourth numbers---in this case, between 4 and 6---which is 5.
 
 **Mode**
 
@@ -248,7 +256,7 @@ embed_url("https://www.youtube.com/watch?v=h8EYEJ32oQ8")
 
 **Standard Deviation**
 
-So far we have discussed measures of central tendency. But any statistic measuring the center will be less representative as the data becomes more variable.  That is why, along with measures of center, we focus on measures of spread in summarizing data. Standard deviation is probably the best known measure of variability.  It represents the average deviation of each observation from the mean of the data. In statistics, the standard deviation of a sample of data is referred to as $s$.  The calculation of $s$ is a little tricky.  Here is the formula.
+So far we have discussed measures of central tendency. But any statistic measuring the center will be less representative as the data becomes more variable.  That is why, in summarizing data, we focus on measures of spread or variability, along with measures of central tendency. Standard deviation is probably the best known measure of variability.  It represents the average deviation of each observation from the mean of the data. In statistics, the standard deviation of a sample of data is represented as $s$.  The calculation of $s$ is a little tricky.  Here is the formula.
 
 $$s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n \left(x_i - \bar{x}\right)^2}$$
 
@@ -256,8 +264,8 @@ This formula says:
 
 1. From each observation, $x_i$, subtract the mean, $\bar{x}$, and square the difference.
 2. Sum up the squared differences for $x_i$ to $x_n$.  This is the meaning of that frightening summation symbol: $\sum_{i=1}^n$
-3. Divide by $n -1$.  Essentially this consists in calculating the average squared difference from the mean. 
-4.  Calculate the square root.
+3. Divide by $n - 1$.  Essentially this consists in calculating the average squared difference from the mean. 
+4. Calculate the square root.
 
 Here is the calculation of squared differences from the mean using the sample from above: 10, 12,  3, 4, 500.
 
@@ -373,7 +381,7 @@ Here is an explanation of the above code:
 1. `m_clean <- m`:  Take the original dataset, `m`, and write it to a new dataset, `m_clean.`
 2. ` m %>%`: The pipe operator, which can be read as "and then." Note that "command-shift-m" is a shortcut for `%>%`.
 3. `mutate`:  The `dplyr` command for creating a new variable.  In this case we will not be creating brand new variables, but overwriting old ones, replacing the existing character variables with factor variables.
-4. `reported_satisfaction = factor(reported_satisfaction, levels = c("low","avg", "high"), ordered = T)`: Overwrite the existing `reported_satisfaction` character variable with a ordered factor using the specified level structure. The `levels()` argument allows you to set the order of the levels to override the default alphabetic ordering. The `ordered()` argument allows you to specify whether one level should be considered greater than another.
+4. `reported_satisfaction = factor(reported_satisfaction, levels = c("low","avg", "high"), ordered = T)`: Overwrite the existing `reported_satisfaction` character variable with an ordered factor using the specified level structure. The `levels()` argument allows you to set the order of the levels to override the default alphabetic ordering. The `ordered()` argument allows you to specify whether one level should be considered greater than another.
 5. `reported_usage_level = factor(reported_usage_level, levels = c("low",  "avg", "high"), ordered = T)`: Same explanation as above.
 6. `considering_change_of_plan = factor(considering_change_of_plan, levels = c("no", "maybe", "yes")`: Same explanation as above except that we have omitted the `ordered()` argument, relying instead on the default `ordered = F` argument.
 7. `leave = factor(leave)`: Same explanation as above except that now we will use the defaults only: alphabetic level ordering (first `LEAVE` then `STAY`) and `ordered = F`.

@@ -92,7 +92,8 @@ Here is the tree:
 
 ```{r tree, echo=T}
 # Fit tree
-(tree_model <- rpart(leave ~ house, data = m_clean))
+(tree_model <- rpart(formula = leave ~ house, 
+                     data = m_clean))
 
 ```
 
@@ -107,13 +108,13 @@ A classification tree can be visualized as an upside down tree with the "root" a
 
 ```{r tree-plot}
 # Plot tree object
-rpart.plot(tree_model)
+rpart.plot(x = tree_model)
 
 ```
 
+`rpart.plot()` simply plots a model object created by `rpart()`, which we define in the `x` argument to the function. 
 
-
-How to read this?  66% of the data (3306 observations) is in the left branch and 34% (1688 observations) in the right. The majority class in the left leaf node is `LEAVE`, with 1 - .41 = .59 or 59% of the observations, which is therefore the prediction for all observations falling in this node.  The reason the tree lists the proportion of `STAY` in the left branch is because, as noted above, that is the category we are explicitly modeling due to the variable's factor structure. The majority class, and hence the predicted class for that group, in the right node is `STAY` with 69% of the observations.
+How to read this plot?  66% of the data (3306 observations) is in the left branch and 34% (1688 observations) in the right. The majority class in the left leaf node is `LEAVE`, with 1 - .41 = .59 or 59% of the observations, which is therefore the prediction for all observations falling in this node.  The reason the tree lists the proportion of `STAY` in the left branch is because, as noted above, that is the category we are explicitly modeling due to the variable's factor structure. The majority class, and hence the predicted class for that group, in the right node is `STAY` with 69% of the observations.
 
 So, a tree model is super simple to set up in R, though the output can be tricky to interpret.  It helps to have an example handy when interpreting a new tree model.
 
@@ -144,7 +145,7 @@ Entropy in the two leaf nodes, using rounded inputs from the plot for illustrati
 
 This result makes intuitive sense since entropy is higher in the more impure left node where the classes are more evenly balanced. 
 
-For future calculations we will not round the inputs since then our final result would be thrown off by rounding error.
+For future calculations we will not round the inputs since our final result would then be thrown off by rounding error.
 
 ## Information Gain
 
@@ -255,7 +256,8 @@ This number can be obtained more simply using the `predict()` function.  The `pr
 
 
 ```{r predict_tree}
-predict(tree_model, type = "class") %>% 
+predict(object = tree_model, 
+        type = "class") %>% 
   head
 ```
 
@@ -263,7 +265,7 @@ Using this output we can calculate accuracy as follows:
 
 
 ```{r acc}
-(predict(tree_model, type = "class") == m_clean$leave) %>% 
+(predict(object = tree_model, type = "class") == m_clean$leave) %>% 
   mean
 ```
 
@@ -277,11 +279,12 @@ Can we improve the model?   Let's fit a tree model with all the  available predi
 
 ```{r}
 # Fit tree
-(tree_model2 <- rpart(leave ~ ., data = m_clean))
+(tree_model2 <- rpart(formula = leave ~ ., 
+                      data = m_clean))
 
 
 # Visualize
-rpart.plot(tree_model2)
+rpart.plot(x = tree_model2)
 ```
 
 Let's practice reading this tree. The first split is on house less than \$600k (left branch) or greater than \$600k (right branch). Subsequently, all the splits will have "yes" on the left and "no" on the right, where "yes" and "no" represent answers to the condition stated in the split. Reading the left branch: customers owning homes worth less than \$600k (first split) and with overage greater than 98 (second split) are predicted to leave. Reading the right branch: customers owning homes worth more than \$600k (first split) and with incomes less than \$100k (second split) are predicted to stay.

@@ -1,9 +1,8 @@
 # Model Evaluation and Deployment
 
-## tl:dr
+## tl;dr
 
-This chapter focuses on model evaluation, and specifically the task
-of translating model results into profit. Profit is usually the key metric for comparing models and evaluating a proposed analytic solution. The chapter introduces the confusion matrix, a handy tool for summarizing model performance, as well as the cost-benefit matrix, which is used for calculating profit. 
+This chapter focuses on model evaluation, and specifically the task of translating model results into profit. Profit is usually the key metric for comparing models and evaluating a proposed analytic solution. The chapter introduces the confusion matrix, a handy tool for summarizing model performance, as well as the cost-benefit matrix, which is used for calculating profit. 
 
 ## Introduction
 
@@ -102,13 +101,12 @@ Notice that some of the probabilities seem to be repeated (for example, observat
 2. Staying and leaving are mutually exclusive events since for a given customer one or the other  *must* occur. Thus $p(STAY) + p(LEAVE) = 1$, which means that $p(STAY) = 1 - p(LEAVE)$ and $p(LEAVE) = 1 - p(STAY)$.
 
 
-We would use square bracket notation, `[ , ]`, to index the first column specifically, in order to extract the probability for `LEAVE`:
+We use square bracket notation, `[ , ]`, to index the first column specifically, in order to extract the probability for `LEAVE`:
 
 ```{r predict-prob2}
 predict(tree_model2, type = "prob")[,1] %>%
   head
 
-# Same result:  predict(tree_model2, type = "prob")$LEAVE
 ```
 
 
@@ -344,6 +342,6 @@ Notice that, after filtering, the number of current customer is 1559 rather than
 - `False negative (FN)`. Predict the event does not occur, but it does.
 - `True positive (TP)`. Predict the event and it occurs.
 - `True negative (TN)`. Predict the event does not occur and it does not.
-- `Sensitivity (the true negative rate)`. TN / (TN + FP)
-- `Specificity (the true positive rate)`.  TP / (TP + FN)
+- `Specificity (the true negative rate)`. TN / (TN + FP)
+- `Sensitivity (the true positive rate)`.  TP / (TP + FN)
 - `Accuracy`. (TP + TN ) / (TP + TN + FP + FN)

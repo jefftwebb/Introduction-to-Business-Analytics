@@ -5,10 +5,10 @@ library(knitr)
 library(vembedr)
 ```
 
-## tl:dr
+## tl;dr
 
 
-This chapter introduces R and Rstudio, explains the difference between them, provides instructions for downloading and installing them on your computer, and offers a quick introduction to the layout and use of RStudio.
+This chapter introduces R and Rstudio, explains the difference between them, provides instructions for downloading and installing them on your computer, and offers a quick introduction to the layout and use of RStudio. Basically: R is the statistical software and RStudio is an integrated design environment that makes it easier to use R.  Both tools are free to download and use.   
 
 
 ## R
@@ -30,7 +30,7 @@ There are  a very large number of supplementary packages that extend R's usefuln
 
 ## RStudio
 
-RStudio is a free [integrated design environment](https://en.wikipedia.org/wiki/Integrated_development_environment) or IDE for R. R can certainly be used by itself (and in fact many people whose workflows predate RStudio prefer to do just that) but the graphical user interface or GUI is extremely minimalistic.  RStudio helps improve productivity by  supplying a much richer GUI that offers menu-driven support for many programming and organizational tasks. An IDE such as RStudio makes it easier to get stuff done. We will be using RStudio extensively in this course. 
+RStudio is a free [integrated design environment](https://en.wikipedia.org/wiki/Integrated_development_environment) or IDE for R. R can certainly be used by itself (and in fact some people whose workflows predate RStudio prefer to do just that) but the graphical user interface or GUI is extremely minimalistic.  RStudio helps improve productivity by  supplying a much richer GUI that offers menu-driven support for many programming and organizational tasks. An IDE such as RStudio makes it easier to get stuff done. We will be using RStudio extensively in this course. 
 
 Go to [rstudio.com](https://www.rstudio.com) to download the desktop version of RStudio, making sure to pick the free version that is appropriate for your operating system.  Note:  *you must have R installed before you install RStudio*.  Here are instructions:
 

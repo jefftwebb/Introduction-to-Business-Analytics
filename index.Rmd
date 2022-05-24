@@ -4,6 +4,7 @@ author: "Jeff Webb"
 date: "`r Sys.Date()`"
 output: pdf_document
 documentclass: book
+always_allow_html: true
 bibliography:
 - book.bib
 - packages.bib
@@ -28,7 +29,7 @@ You will be able to copy, paste and run the code from this book in your own desk
 
 The book is fully searchable.  Look for the magnifying glass icon on the top menu.  
 
-The download button is not operational.  The book is not (yet) downloadable as a .pdf or epub book.
+<!-- The download button is not operational.  The book is not (yet) downloadable as a .pdf or epub book. -->
 
 
 
