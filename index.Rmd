@@ -2,7 +2,7 @@
 title: "Course Notes for Introduction to Business Analytics"
 author: "Jeff Webb"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: html_document
 documentclass: book
 always_allow_html: true
 bibliography:
