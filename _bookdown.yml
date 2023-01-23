@@ -1,0 +1,5 @@
+book_filename: "Introduction-to-business-analytics-book"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
