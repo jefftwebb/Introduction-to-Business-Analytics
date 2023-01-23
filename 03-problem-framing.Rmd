@@ -6,7 +6,17 @@ Understanding the business context of an analytics project is critical.  The key
 
 ## Introduction
 
-To introduce business problem framing we will borrow a case from  *Data Science for Business* (DSB). Here is the description of the case from DSB:
+Business understanding is the first phase in the CRISP-DM process model:
+
+![CRISP-DM Process](CRISP-DM_Process_Diagram.png)
+This may be the most important phase in an analytics project because it sets the expectations and 
+limitations of the project, which are summarized in a business problem statement. The tasks in this phase include framing the business problem and ---the main objective--- writing the problem statement.  For more detail on these tasks see *Analytics Body of Knowledge*, Chapter 8, sections 1 –  2.12. 
+
+One point to note---before introducing problem framing---is that the arrows between Business Understanding and Data Understanding in the diagram are *bidirectional*.  This represents a key feature of analytics projects:  the tasks are iterative, rather than linear, in that they might be repeated (as needed) multiple times. Business Understanding is like this.  What you learn by exploring the data for a project (in the Data Understanding phase) might require you to *re*frame the business problem. For example, the data for the project, when you look at it more closely, may not support the project described in the business problem statement.  What to do? Reframe the problem and revise the problem statement.
+
+## Example Case
+
+To illustrate business problem framing we will borrow a case from the book *Data Science for Business* by Foster Provost and Tom Fawcett. Here is the description of the case from DSB:
 
 > Assume you just landed a great analytical job with MegaTelCo, one of the largest telecommunication firms in the United States. They are having a major problem with customer retention in their wireless business. In the mid-Atlantic region, 20% of cell phone customers leave when their contracts expire, and it is getting increasingly difficult to acquire new customers. Since the cell phone market is now saturated, the huge growth in the wireless market has tapered off. Communications companies are now engaged in battles to attract each  customers while retaining their own. Customers switching from one company to another is called churn, and it is expensive all around: one company must spend on incentives to attract a customer while another company loses revenue when the customer departs.You have been called in to help understand the problem and to devise a solution. Attracting new customers is much more expensive than retaining existing ones, so a good deal of marketing budget is allocated to prevent churn. Marketing has already designed a special retention offer. Your task is to devise a precise, step-by-step plan for how the data science team should use MegaTelCo’s vast data resources to decide which customers should be offered the special retention deal prior to the expiration of their contracts.
 

@@ -33,7 +33,7 @@ library(rpart.plot)
 m <- read.csv("megatelco.csv")
 
 # Clean the data
-m_clean <- m %>% 
+m %>% 
   mutate(reported_satisfaction = factor(reported_satisfaction,
                                         levels = c("low","avg", "high"),
                                         ordered = T),
@@ -48,10 +48,10 @@ m_clean <- m %>%
          house > 0,
          handset_price < 1000) %>% 
   na.omit %>% 
-  select(-id)
+  select(-id) -> m_clean 
 
 # Inspect data
-glimpse(m_clean)
+str(m_clean)
 ```
 
 As a reference, here is the data dictionary:
@@ -82,7 +82,8 @@ Let's demonstrate how to use  `rpart` for classification by fitting a simple tre
 
 ```{r boxplot}
 
-ggplot(data = m_clean, aes(x = leave, y = house)) +
+ggplot(data = m_clean, 
+       mapping = aes(x = leave, y = house)) +
   geom_boxplot() +
   labs(title = "leave ~ house")
   
@@ -92,9 +93,10 @@ Here is the tree:
 
 ```{r tree, echo=T}
 # Fit tree
-(tree_model <- rpart(formula = leave ~ house, 
-                     data = m_clean))
+tree_model <- rpart(formula = leave ~ house, 
+                     data = m_clean)
 
+tree_model
 ```
 
 I have assigned the model to an object, `tree_model`, which we will use later.  For now, let's work through these simplified results. One thing to keep in mind is that due to the factor structure in the target variable---due to the alphabetic defaults for the `factor()` function, the first level is `LEAVE` and the second level is `STAY`---the algorithm is specifically modeling `STAY`
@@ -128,7 +130,7 @@ Let's use this simple tree model to review the concepts of purity, entropy and i
 
 Purity is a commonsense notion.  The leaf nodes in a tree model are pure if they all have the same class label.  If they don't---as in our simple model---then they are impure.  For example, the observed outcomes in the leaf node in the left branch consist in 41% `STAY` and 59% `LEAVE`, and, in the right branch, 69% `STAY` and 31% `LEAVE`.  These leaf nodes are impure, then, but how impure? Entropy answers that question for us, formalizing the notion of impurity.   Entropy ranges between 0 and 1, with 0 indicating  no  disorder (the group is pure)  and 1 indicating maximal disorder (the group is balanced).
 
-Figure 3-3 in DSB is helpful:
+Figure 3-3 in *Data Science for Business* is helpful:
 
 ![](images/entropy.png)
 
@@ -136,7 +138,7 @@ In our our tree model, entropy would be 0 if the leaf nodes were either all `LEA
 
 Entropy is  formally defined as: $-p_1 log(p_1) - p_2 log(p_2) ...$
 
-We will follow DSB in using log base 2 to calculate entropy and information gain.  Log base 2 is used, rather than natural log (which is more common in statistics), because it ensures that entropy scales between 0 and 1. (Natural log would work just fine for calculating entropy for comparative use but it would not have this nice property.)
+We will use log base 2 to calculate entropy and information gain, rather than natural log (which is more common in statistics), because it ensures that entropy scales between 0 and 1. (Natural log would work just fine for calculating entropy for comparative use but it would not have this nice property.)
 
 Entropy in the two leaf nodes, using rounded inputs from the plot for illustration, would be:
 
@@ -269,7 +271,7 @@ Using this output we can calculate accuracy as follows:
   mean
 ```
 
-This code works because the double equals sign, "==," evaluates to `TRUE` or `FALSE` (in effect it asks: does the predicted value equal the observed value, T or F?), and in R the `mean()` function counts `TRUE` as 1.  The code sums the instances where predicted is identical to observed and divides by the number of rows.
+This code works because the double equals sign, "==," evaluates to `TRUE` or `FALSE` (in effect it asks: does the *predicted* value equal the *observed* value, T or F?), and in R the `mean()` function counts `TRUE` as 1.  The code sums the instances where predicted is identical to observed and divides by the number of rows.
 
 
 
@@ -295,7 +297,7 @@ Plots with lots of nodes and branches can quickly become too complicated to view
 rpart.plot(tree_model2, tweak = 1, roundint=T)
 ```
 
-This plot is different---indeed the model is different---from the one displayed in Figure 3-18 of DSB.  That is presumably because of differences in software implementation.  Notice in the model summary that there are missing nodes---the count jumps from 13 to 22.  The missing nodes have been "pruned" by the algorithm after growing the tree because they did not improve model performance.
+Notice in the model summary that there are missing nodes---the count jumps from 13 to 22.  The missing nodes have been "pruned" by the algorithm after growing the tree because they did not improve model performance.
 
 
 How would we interpret this model? Notice that the very top of the tree gives a key: observations are classified into the right branch when the condition stated in the node is false ("no") and classified into the left branch when true ("yes"). Take the rightmost leaf in the tree as an example.  If house > 600k and income is less than 100k then the model predicts `STAY`. 
@@ -323,10 +325,10 @@ We can get a sense of which variables are most important in predicting churn by 
 
 **Packages**
 
-- `dplyr`
-- `ggplot2`
-- `rpart`
-- `rpart.plot`
+- dplyr
+- ggplot2
+- rpart
+- rpart.plot
 
 **Functions**
 

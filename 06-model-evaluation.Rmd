@@ -61,7 +61,7 @@ How to read this?  As indicated by the labels, the model's predictions are in th
 - FN: 538 cases in which the model incorrectly predicted `STAY`
 - TN: 1607cases in which the model correctly predicted `STAY`
 
-Notice that we can obtain accuracy from the confusion matrix also by summing the diagonal from upper left to lower right and dividing by the total:  $Acc = \frac{\sum TP + \sum TN}{\sum Total Pop}$ = (1930 + 1607)/ (1930 + 1607 + 538 + 919) = .71.
+Notice that we can obtain accuracy from the confusion matrix also by summing the diagonal from upper left to lower right and dividing by the total:  $Acc=\frac{\sum_{ }^{ }TP+\sum_{ }^{ }TN}{\sum_{ }^{ }TotalPop}$ = (1930 + 1607)/ (1930 + 1607 + 538 + 919) = .71.
 
 (There are many additional metrics described at the end of DSB, Chapter 7 that can be calculated from the confusion matrix.  We won't go into them now.)
 
@@ -104,7 +104,7 @@ Notice that some of the probabilities seem to be repeated (for example, observat
 We use square bracket notation, `[ , ]`, to index the first column specifically, in order to extract the probability for `LEAVE`:
 
 ```{r predict-prob2}
-predict(tree_model2, type = "prob")[,1] %>%
+predict(tree_model2, type = "prob")[ , 1] %>%
   head
 
 ```
@@ -116,7 +116,7 @@ Notice that we can obtain exactly the same confusion matrix as the one above by 
 
 ```{r tab2}
 
-table(predicted = ifelse(predict(tree_model2, type = "prob")[,1] > .5, "LEAVE", "STAY"),
+table(predicted = ifelse(predict(tree_model2, type = "prob")[ , 1] > .5, "LEAVE", "STAY"),
       observed = m_clean$leave)
 
 ```
